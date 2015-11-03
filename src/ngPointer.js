@@ -3,19 +3,19 @@
 angular.module("ngPointer", [])
 .directive("ngPointerdown", function () {
     return {
-        controller: ["$scope", "$element", function ($scope, $element) {
+        controller: ["$scope", "$element", function ($scope, $element, $attr) {
             $element.bind("mousedown touchstart MSPointerDown pointerdown", onPointerdown);
             function onPointerdown(event) {
-                var method = $element.attr("ng-pointerdown");
-                $scope.$event = event;
-                $scope.$apply(method);
+                $scope.$apply(function () {
+                    $scope.$eval($attr.ngPointerdown);
+                });
             }
         }]
     }
 })
 .directive("ngPointermove", function () {
     return {
-        controller: ["$scope", "$element", function ($scope, $element) {
+        controller: ["$scope", "$element", function ($scope, $element, $attr) {
             $element.bind("mousedown touchstart MSPointerDown pointerdown", onPointerdown);
             function onPointerdown(event) {
                 event.preventDefault();
@@ -23,9 +23,9 @@ angular.module("ngPointer", [])
                 $element.bind("mouseup touchend MSPointerUp pointerup", onPointerup);
             }
             function onPointermove(event) {
-                var method = $element.attr("ng-pointermove");
-                $scope.$event = event;
-                $scope.$apply(method);
+                $scope.$apply(function () {
+                    $scope.$eval($attr.ngPointermove);
+                });
             }
             function onPointerup(event) {
                 event.preventDefault();
@@ -38,12 +38,12 @@ angular.module("ngPointer", [])
 })
 .directive("ngPointerup", function () {
     return {
-        controller: ["$scope", "$element", function ($scope, $element) {
+        controller: ["$scope", "$element", function ($scope, $element, $attr) {
             $element.bind("mouseup touchend MSPointerUp pointerup", onPointerup);
             function onPointerup(event) {
-                var method = $element.attr("ng-pointerup");
-                $scope.$event = event;
-                $scope.$apply(method);
+                $scope.$apply(function () {
+                    $scope.$eval($attr.ngPointerup);
+                });
             }
         }]
     }
